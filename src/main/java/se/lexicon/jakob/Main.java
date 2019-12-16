@@ -41,6 +41,7 @@ public class Main extends Application
      * ---------Functional variables initialization---
      */
     private int seconds;
+    
     private Timer timerKeeper;
     private boolean keepRunning = true;
 
@@ -170,7 +171,14 @@ public class Main extends Application
             @Override
             public void run()
             {
+                
+
+                gc.clearRect(0, 0, sceneWidth, sceneHeight);
+                gc.fillText("Seconds ", 10, 130);
+                gc.fillText("" + second + "", 120, 130);
+                
                 second -= 1;
+                
                 if (second <= 0 && keepRunning)
                 {
                     System.out.println("Seconds:" + seconds);
