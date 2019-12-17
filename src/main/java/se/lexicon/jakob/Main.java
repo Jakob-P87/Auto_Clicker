@@ -68,7 +68,7 @@ public class Main extends Application
         gc.setFont(theFont);
         gc.fillText("Seconds ", 10, 130);
         gc.fillText("" + seconds + "", 120, 130);
-        gc.fillText("<--",160 , 60);
+        gc.fillText("<--",160 , 55);
         
         /**------------Button graphic settings-------------*/
         root.getChildren().add(btnOn);
@@ -128,6 +128,11 @@ public class Main extends Application
                                gc.fillText("<--",160 , 60);
                                timerKeeper.cancel(); //Cancel the timer and remove the used timer
                                keepRunning = false;
+                               seconds = 0;
+                               gc.clearRect(0, 0, sceneWidth, sceneHeight);
+                               gc.fillText("Seconds ", 10, 130);
+                               gc.fillText("" + seconds + "", 120, 130);
+                               gc.fillText("<--",160 , 55);
                                System.out.println("Stop");
                            });
         
