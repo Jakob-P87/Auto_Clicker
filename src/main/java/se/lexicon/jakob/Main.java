@@ -28,7 +28,7 @@ public class Main extends Application
     private Button incSec = new Button("+");
     private Button btnW = new Button("W");
     private Button btnShift = new Button("Shift");
-
+    
     /**
      * ---------Scene initialization------------------
      */
@@ -36,7 +36,7 @@ public class Main extends Application
     private int sceneHeight = 150;
     private Canvas canvas = new Canvas(sceneWidth, sceneHeight);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
-
+    
     /**
      * ---------Functional variables initialization---
      */
@@ -44,12 +44,12 @@ public class Main extends Application
     
     private Timer timerKeeper;
     private boolean keepRunning = true;
-
+    
     public static void main(String[] args)
     {
         launch(args);
     }
-
+    
     public void start(Stage theStage)
     {
         /**------------Window settings-------------*/
@@ -58,17 +58,18 @@ public class Main extends Application
         Scene theScene = new Scene(root);
         theStage.setScene(theScene);
         theStage.setResizable(false);
-
-
+        
+        
         root.getChildren().add(canvas);
-
+        
         /**------------Text settings-------------*/
         gc.setFill(Color.BLACK);
         javafx.scene.text.Font theFont = Font.font("Times New Roman", FontWeight.BOLD, 14);
         gc.setFont(theFont);
         gc.fillText("Seconds ", 10, 130);
         gc.fillText("" + seconds + "", 120, 130);
-
+        gc.fillText("<--",160 , 60);
+        
         /**------------Button graphic settings-------------*/
         root.getChildren().add(btnOn);
         root.getChildren().add(btnOff);
@@ -77,7 +78,7 @@ public class Main extends Application
         root.getChildren().add(incSec);
         root.getChildren().add(btnW);
         root.getChildren().add(btnShift);
-
+        
         btnOn.setPrefSize(80, 20);
         btnOff.setPrefSize(80, 20);
         btnSelect.setPrefSize(80, 20);
@@ -85,94 +86,95 @@ public class Main extends Application
         decSec.setPrefSize(35, 30);
         btnW.setPrefSize(60, 20);
         btnShift.setPrefSize(60, 20);
-
+        
         btnOn.setLayoutX(70);
         btnOn.setLayoutY(10);
         btnOff.setLayoutX(70);
         btnOff.setLayoutY(40);
-
+        
         btnSelect.setLayoutX(70);
         btnSelect.setLayoutY(70);
-
+        
         decSec.setLayoutX(70);
         decSec.setLayoutY(110);
         incSec.setLayoutX(145);
         incSec.setLayoutY(110);
-
+        
         btnW.setLayoutX(220);
         btnW.setLayoutY(10);
         btnShift.setLayoutX(220);
         btnShift.setLayoutY(40);
-
+        
         buttons();
-
+        
         theStage.show();
     }
-
+    
     private void buttons()
     {
         /**------------Buttons functions-------------*/
         btnOn.setOnAction(e ->
-        {
-            timerKeeper = new Timer(); //Need to instantiate a new timer here
-            if (seconds >= 1)
-            {
-                keepRunning = true;
-                customTimer();
-            }
-        });
-
+                          {
+                              timerKeeper = new Timer(); //Need to instantiate a new timer here
+                              if (seconds >= 1)
+                              {
+                                  keepRunning = true;
+                                  customTimer();
+                              }
+                          });
+        
         btnOff.setOnAction(e ->
-        {
-            timerKeeper.cancel(); //Cancel the timer and remove the used timer
-            keepRunning = false;
-            System.out.println("Stop");
-        });
-
+                           {
+                               gc.fillText("<--",160 , 60);
+                               timerKeeper.cancel(); //Cancel the timer and remove the used timer
+                               keepRunning = false;
+                               System.out.println("Stop");
+                           });
+        
         decSec.setOnAction(e ->
-        {
-            if (seconds > 0)
-            {
-                seconds -= 1;
-                gc.clearRect(0, 0, sceneWidth, sceneHeight);
-                gc.fillText("Seconds ", 10, 130);
-                gc.fillText("" + seconds + "", 120, 130);
-            }
-        });
-
+                           {
+                               if (seconds > 0)
+                               {
+                                   seconds -= 1;
+                                   gc.clearRect(0, 0, sceneWidth, sceneHeight);
+                                   gc.fillText("Seconds ", 10, 130);
+                                   gc.fillText("" + seconds + "", 120, 130);
+                               }
+                           });
+        
         incSec.setOnAction(e ->
-        {
-            if (seconds < 30)
-            {
-                seconds += 1;
-                gc.clearRect(0, 0, sceneWidth, sceneHeight);
-                gc.fillText("Seconds ", 10, 130);
-                gc.fillText("" + seconds + "", 120, 130);
-            }
-        });
-
+                           {
+                               if (seconds < 30)
+                               {
+                                   seconds += 1;
+                                   gc.clearRect(0, 0, sceneWidth, sceneHeight);
+                                   gc.fillText("Seconds ", 10, 130);
+                                   gc.fillText("" + seconds + "", 120, 130);
+                               }
+                           });
+        
         btnW.setOnAction(e ->
-        {
-
-        });
-
+                         {
+            
+                         });
+        
         btnShift.setOnAction(e ->
-        {
-
-        });
+                             {
+            
+                             });
     }
-
+    
     private void customTimer()
     {
         timerKeeper.schedule(new TimerTask()
         {
             int second = seconds;
-
+            
             @Override
             public void run()
             {
                 
-
+                
                 gc.clearRect(0, 0, sceneWidth, sceneHeight);
                 gc.fillText("Seconds ", 10, 130);
                 gc.fillText("" + second + "", 120, 130);
@@ -188,9 +190,9 @@ public class Main extends Application
             }
         }, 0, 1000);
     }
-
+    
     private Robot robot;
-
+    
     {
         try
         {
@@ -200,12 +202,12 @@ public class Main extends Application
             e.printStackTrace();
         }
     }
-
+    
     public void startRobot()
     {
         System.out.println("Button pressed");
         robot.keyPress(KeyEvent.VK_SHIFT);
-        robot.delay(30);
+        robot.delay(200);
         robot.keyRelease(KeyEvent.VK_SHIFT);
         System.out.println("Button released");
     }
